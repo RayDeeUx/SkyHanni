@@ -25,10 +25,6 @@ class WikiCommand {
                 event.isCanceled = true
                 val search = packet.message.substring(6)
                 LorenzUtils.chat("§e[SkyHanni] Searching the Fandom Wiki for §c$search")
-
-                //val url = "https://www.google.com/search?q=inurl%3Ahypixel-skyblock.fandom.com $search&hl=en"
-                //val poggers = true
-                //val google = !poggers
                 val url = "https://hypixel-skyblock.fandom.com/wiki/Special:Search?query=$search&scope=internal"
                 OSUtils.openBrowser(url.replace(' ', '+'))
             }
