@@ -5,7 +5,17 @@ import at.hannibal2.skyhanni.config.core.config.Position;
 import at.hannibal2.skyhanni.features.misc.ghostcounter.GhostFormatting;
 import at.hannibal2.skyhanni.features.misc.ghostcounter.GhostUtil;
 import com.google.gson.annotations.Expose;
-import io.github.moulberry.moulconfig.annotations.*;
+import io.github.moulberry.moulconfig.annotations.Accordion;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorAccordion;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorBoolean;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorButton;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorDraggableList;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorDropdown;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorInfoText;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorSlider;
+import io.github.moulberry.moulconfig.annotations.ConfigEditorText;
+import io.github.moulberry.moulconfig.annotations.ConfigOption;
+import io.github.moulberry.moulconfig.observer.Property;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -104,7 +114,7 @@ public class CombatConfig {
         public static class EnderSlayerConfig {
 
             @Expose
-            @ConfigOption(name = "Laser phase timer", desc = "Show a timer when the laser phase will end.")
+            @ConfigOption(name = "Laser Phase Timer", desc = "Show a timer when the laser phase will end.")
             @ConfigEditorBoolean
             public boolean laserPhaseTimer = false;
 
@@ -121,7 +131,7 @@ public class CombatConfig {
 
         public static class VampireSlayerConfig {
             @Expose
-            @ConfigOption(name = "HP until Steak", desc = "Show the amount of HP missing until the steak can be used on the Vampire Slayer on top of the boss.")
+            @ConfigOption(name = "HP Until Steak", desc = "Show the amount of HP missing until the Steak can be used on the Vampire Slayer on top of the boss.")
             @ConfigEditorBoolean
             public boolean hpTillSteak = false;
 
@@ -145,7 +155,7 @@ public class CombatConfig {
     public static class GhostCounterConfig {
 
         @Expose
-        @ConfigOption(name = "Enabled", desc = "Enable ghost counter.")
+        @ConfigOption(name = "Enabled", desc = "Enable the ghost counter (invisible creepers in the Dwarven Mines The Mist area).")
         @ConfigEditorBoolean
         @FeatureToggle
         public boolean enabled = true;
@@ -191,7 +201,7 @@ public class CombatConfig {
             @ConfigOption(name = "§eText Formatting Info", desc = "§e%session% §ris §e§lalways §rreplaced with\n" +
                     "§7the count for your current session.\n" +
                     "§7Reset when restarting the game.\n" +
-                    "§7You can use §e&Z §7color code to use SBA chroma")
+                    "§7You can use §e&Z §7color code to use SBA chroma.")
             @ConfigEditorInfoText
             public boolean formatInfo = false;
 
@@ -472,6 +482,237 @@ public class CombatConfig {
 
         @Expose
         public Position position = new Position(50, 50, false, true);
+    }
+
+    @Expose
+    @ConfigOption(name = "Summonings", desc = "")
+    @Accordion
+    public SummoningsConfig summonings = new SummoningsConfig();
+
+    public static class SummoningsConfig {
+
+        @Expose
+        @ConfigOption(name = "Summoning Soul Display", desc = "Show the name of dropped Summoning Souls laying on the ground. " +
+                "§cNot working in Dungeons if Skytils' 'Hide Non-Starred Mobs Nametags' feature is enabled!")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean summoningSoulDisplay = false;
+
+        @Expose
+        @ConfigOption(name = "Summoning Mob Display", desc = "Show the health of your spawned summons.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean summoningMobDisplay = false;
+
+        @Expose
+        public Position summoningMobDisplayPos = new Position(10, 10, false, true);
+
+        @Expose
+        @ConfigOption(name = "Summoning Mob Nametag", desc = "Hide the nametag of your spawned summons.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean summoningMobHideNametag = false;
+
+        @Expose
+        @ConfigOption(name = "Summoning Mob Color", desc = "Marks own summons green.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean summoningMobColored = false;
+    }
+
+    @Expose
+    @ConfigOption(name = "Mobs", desc = "")
+    @Accordion
+    public MobsConfig mobs = new MobsConfig();
+
+    public static class MobsConfig {
+
+        @Expose
+        @ConfigOption(name = "Highlighters", desc = "")
+        @ConfigEditorAccordion(id = 0)
+        public boolean highlighters = false;
+
+        @Expose
+        @ConfigOption(name = "Area Boss", desc = "Highlight Golden Ghoul, Old Wolf, Voidling Extremist and Millenia-Aged Blaze.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean areaBossHighlight = true;
+
+        @Expose
+        @ConfigOption(name = "Arachne Keeper", desc = "Highlight the Arachne Keeper in the Spider's Den in purple color.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean arachneKeeperHighlight = true;
+
+        @Expose
+        @ConfigOption(name = "Corleone", desc = "Highlight Boss Corleone in the Crystal Hollows.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean corleoneHighlighter = true;
+
+        @Expose
+        @ConfigOption(name = "Zealot", desc = "Highlight Zealots and Bruisers in The End.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean zealotBruiserHighlighter = false;
+
+        @Expose
+        @ConfigOption(
+                name = "Special Zealots",
+                desc = "Highlight Special Zealots (the ones that drop Summoning Eyes) in the End."
+        )
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean specialZealotHighlighter = true;
+
+        @Expose
+        @ConfigOption(name = "Corrupted Mob", desc = "Highlight corrupted mobs in purple color.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean corruptedMobHighlight = false;
+
+        @Expose
+        @ConfigOption(name = "Arachne Boss", desc = "Highlight the Arachne boss in red and mini-bosses in orange.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean arachneBossHighlighter = true;
+
+        @Expose
+        @ConfigOption(name = "Respawn Timers", desc = "")
+        public boolean timers = false;
+
+        @Expose
+        @ConfigOption(
+                name = "Area Boss",
+                desc = "Show a timer when Golden Ghoul, Old Wolf, Voidling Extremist or Millenia-Aged Blaze respawns. " +
+                        "§cSometimes it takes 20-30 seconds to calibrate correctly."
+        )
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean areaBossRespawnTimer = false;
+
+        @Expose
+        @ConfigOption(
+                name = "Arachne Spawn Timer",
+                desc = "Show a timer when Arachne fragments or crystals are placed to indicate how long " +
+                        "until the boss will spawn. §cTimer may be 1-2 seconds off."
+        )
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean showArachneSpawnTimer = true;
+
+        @Expose
+        @ConfigOption(name = "Enderman TP Hider", desc = "Stops the Enderman Teleportation animation.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean endermanTeleportationHider = true;
+
+        @Expose
+        @ConfigOption(name = "Arachne Minis Hider", desc = "Hides the nametag above Arachne minis.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean hideNameTagArachneMinis = true;
+    }
+
+    @Expose
+    @ConfigOption(name = "Bestiary", desc = "")
+    @Accordion
+    public BestiaryConfig bestiary = new BestiaryConfig();
+
+    public static class BestiaryConfig {
+        @Expose
+        @ConfigOption(name = "Enable", desc = "Show Bestiary Data overlay in the Bestiary menu.")
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean enabled = false;
+
+        @Expose
+        @ConfigOption(name = "Number format", desc = "Short: 1.1k\nLong: 1.100")
+        @ConfigEditorDropdown(values = {"Short", "Long"})
+        public int numberFormat = 0;
+
+        @Expose
+        @ConfigOption(name = "Display type", desc = "Choose what the display should show")
+        @ConfigEditorDropdown(values = {
+                "Global to max",
+                "Global to next tier",
+                "Lowest total kills",
+                "Highest total kills",
+                "Lowest kills needed to max",
+                "Highest kills needed to max",
+                "Lowest kills needed to next tier",
+                "Highest kills needed to next tier"
+        })
+        public int displayType = 0;
+
+        @Expose
+        @ConfigOption(name = "Hide maxed", desc = "Hide maxed mobs.")
+        @ConfigEditorBoolean
+        public boolean hideMaxed = false;
+
+        @Expose
+        @ConfigOption(name = "Replace Romans", desc = "Replace Roman numerals (IX) with regular numbers (9)")
+        @ConfigEditorBoolean
+        public boolean replaceRoman = false;
+
+        @Expose
+        public Position position = new Position(100, 100, false, true);
+    }
+
+    @Expose
+    @ConfigOption(name = "Ender Node Tracker", desc = "")
+    @Accordion
+    public EnderNodeConfig enderNodeTracker = new EnderNodeConfig();
+
+    public static class EnderNodeConfig {
+        @Expose
+        @ConfigOption(
+                name = "Enabled",
+                desc = "Tracks all of your drops from mining Ender Nodes in the End.\n" +
+                        "Also tracks drops from Endermen."
+        )
+        @ConfigEditorBoolean
+        @FeatureToggle
+        public boolean enabled = false;
+
+        @Expose
+        @ConfigOption(
+                name = "Text Format",
+                desc = "Drag text to change the appearance of the overlay."
+        )
+        @ConfigEditorDraggableList(
+                exampleText = {
+                        "§5§lEnder Node Tracker",
+                        "§d1,303 Ender Nodes Mined",
+                        "§615.3M Coins Made",
+                        " ",
+                        "§b123 §cEndermite Nest",
+                        "§b832 §aEnchanted End Stone",
+                        "§b230 §aEnchanted Obsidian",
+                        "§b1630 §aEnchanted Ender Pearl",
+                        "§b85 §aGrand Experience Bottle",
+                        "§b4 §9Titanic Experience Bottle",
+                        "§b15 §9End Stone Shulker",
+                        "§b53 §9End Stone Geode",
+                        "§b10 §d◆ Magical Rune I",
+                        "§b24 §5Ender Gauntlet",
+                        "§b357 §5Mite Gel",
+                        "§b2 §cShrimp The Fish",
+                        " ",
+                        "§b200 §5Ender Armor",
+                        "§b24 §5Ender Helmet",
+                        "§b24 §5Ender Chestplate",
+                        "§b24 §5Ender Leggings",
+                        "§b24 §5Ender Boots",
+                        "§b24 §5Ender Necklace",
+                        "§f10§7-§a8§7-§93§7-§52§7-§61 §fEnderman Pet",
+                        " "
+                }
+        )
+        public Property<List<Integer>> textFormat = Property.of(new ArrayList<>(Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 12, 14, 15, 16, 17, 23)));
+
+        @Expose
+        public Position position = new Position(10, 80, false, true);
     }
 
     @Expose

@@ -8,7 +8,7 @@ import at.hannibal2.skyhanni.utils.StringUtils.removeColor
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class CompactBingoChat {
-    private val config get() = SkyHanniMod.feature.bingo.compactChat
+    private val config get() = SkyHanniMod.feature.event.bingo.compactChat
 
     private var inSkillLevelUp = false
     private var inSkyBlockLevelUp = false
@@ -48,10 +48,8 @@ class CompactBingoChat {
             return false
         }
 
-        if (inSkillLevelUp) {
-            if (!message.contains("Access to") && !message.endsWith(" Enchantment")) {
-                return true
-            }
+        if (inSkillLevelUp && !message.contains("Access to") && !message.endsWith(" Enchantment")) {
+            return true
         }
 
         return false
