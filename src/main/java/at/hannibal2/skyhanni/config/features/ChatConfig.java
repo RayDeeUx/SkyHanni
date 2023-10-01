@@ -166,6 +166,12 @@ public class ChatConfig {
     public boolean hideArachneMessages = false;
 
     @Expose
+    @ConfigOption(name = "Don Expresso Hider", desc = "Silences §bDon Expresso§7's \"cOmPLaiNtS\" during the §bMithril Gourmand§7 event in the Dwarven Mines.")
+    @ConfigEditorBoolean
+    @FeatureToggle
+    public boolean everyoneHatesDonExpresso = false;
+
+    @Expose
     @ConfigOption(
             name = "Sacks Hider",
             desc = "Hide the chat's sack change message with this, " +
