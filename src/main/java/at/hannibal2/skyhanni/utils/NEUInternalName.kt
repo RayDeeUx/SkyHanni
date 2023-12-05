@@ -1,7 +1,7 @@
 package at.hannibal2.skyhanni.utils
 
-import at.hannibal2.skyhanni.utils.StringUtils.matchMatcher
 import at.hannibal2.skyhanni.utils.StringUtils.matches
+import at.hannibal2.skyhanni.utils.StringUtils.matchMatcher
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
@@ -50,3 +50,4 @@ fun Pattern.matches(internalName: NEUInternalName): Boolean = this.matches(inter
 inline fun <T : Any> Pattern.matchMatcher(internalName: NEUInternalName, consumer: Matcher.() -> T): T? {
     return this.matchMatcher(internalName.asString(), consumer)
 }
+//s
