@@ -106,8 +106,7 @@ public class StackSizeMenuConfig {
 
         final String str;
         PlayerTryhard(String str) { this.str = str; }
-        @Override
-        public String toString() { return str; }
+        @Override public String toString() { return str; }
     }
 
     @Expose
