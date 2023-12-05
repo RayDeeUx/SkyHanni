@@ -48,7 +48,7 @@ public class InventoryConfig {
 
     @Expose
     @Category(name = "Stack Size", desc = "Stack Sizes in Inventories")
-    public StackSizeConfig stackSize = new StackSizeConfig(); //s
+    public StackSizeConfig stackSize = new StackSizeConfig();
 
     @Expose
     @ConfigOption(name = " Vacuum Bag Cap", desc = "Capping the Garden Vacuum Bag item number display to 40.")
