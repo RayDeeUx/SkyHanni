@@ -267,15 +267,9 @@ public class StackSizeMenuConfig {
         ;
 
         final String str;
-
-        Abiphone(String str) {
-            this.str = str;
-        }
-
+        Abiphone(String str) { this.str = str; }
         @Override
-        public String toString() {
-            return str;
-        }
+        public String toString() { return str; }
     }
 
     @Expose
