@@ -144,6 +144,21 @@ object SkyBlockItemModifierUtils {
         list.toList()
     }
 
+    fun ItemStack.getFruitBowlNames() = getExtraAttributes()?.let {
+        val list = mutableListOf<String>()
+        for (attributes in it.keySet) {
+            if (attributes == "names_found") {
+                val tagList = it.getTagList(attributes, 8)
+                for (i in 0..21) {
+                    val text = tagList.get(i).toString()
+                    if (text == "END") break
+                    list.add(text.replace("\"", ""))
+                }
+            }
+        }
+        list
+    }
+
     fun ItemStack.getAttributes() = getExtraAttributes()
         ?.takeIf { it.hasKey("attributes", 10) }
         ?.getCompoundTag("attributes")
@@ -181,7 +196,29 @@ object SkyBlockItemModifierUtils {
 
     fun ItemStack.getBottleOfJyrreSeconds() = getAttributeInt("bottle_of_jyrre_seconds")
 
-    fun ItemStack.getEdition() = getAttributeInt("edition")
+    fun ItemStack.getPrehistoricEggBlocksWalked() = getAttributeInt("blocks_walked")
+
+    fun ItemStack.getNecronHandlesFound() = getAttributeInt("handles_found")
+
+    fun ItemStack.getBloodGodKills() = getAttributeInt("blood_god_kills")
+    
+    fun ItemStack.getFishesCaught() = getAttributeInt("fishes_caught")
+
+    fun ItemStack.getEdition(): Int? {
+        val data = cachedData
+        if (data.editionNumber == -1) {
+            data.editionNumber = getAttributeInt("edition")
+        }
+        return data.editionNumber
+    }
+
+    fun ItemStack.getAuctionNumber(): Int? {
+        val data = cachedData
+        if (data.auctionNumber == -1) {
+            data.auctionNumber = getAttributeInt("auction")
+        }
+        return data.auctionNumber
+    }
 
     fun ItemStack.getEnchantments() = getExtraAttributes()?.takeIf { it.hasKey("enchantments") }?.run {
         val enchantments = this.getCompoundTag("enchantments")
