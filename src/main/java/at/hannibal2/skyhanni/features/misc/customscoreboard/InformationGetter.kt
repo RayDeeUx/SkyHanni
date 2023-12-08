@@ -1,7 +1,6 @@
 package at.hannibal2.skyhanni.features.misc.customscoreboard
 
 import at.hannibal2.skyhanni.data.ScoreboardData
-import at.hannibal2.skyhanni.data.SlayerAPI
 import at.hannibal2.skyhanni.utils.LorenzUtils.nextAfter
 import at.hannibal2.skyhanni.utils.TabListData
 import at.hannibal2.skyhanni.features.misc.customscoreboard.CustomScoreboardUtils.extractLobbyCode
@@ -145,7 +144,12 @@ class InformationGetter {
             "§a✌ §",
             "Points: ",
             "Challenge:",
-            *dungeonClassList.toTypedArray()
+            *dungeonClassList.toTypedArray(),
+            "§cLocked",
+            "§fCleanup§7:",
+            "§6Year ",
+            "§7Waiting for",
+            "§7your vote..."
         )
 
         extraLines = sidebarLines.filter { line -> !knownLines.any { line.trim().contains(it) } }
@@ -171,5 +175,14 @@ class InformationGetter {
         // Remove slayer
         extraLines = extraLines.filter { sidebarLines.nextAfter("Slayer Quest", 1) != it }
         extraLines = extraLines.filter { sidebarLines.nextAfter("Slayer Quest", 2) != it }
+
+        // remove voting lines
+        val votedLine = sidebarLines.firstOrNull { it.startsWith("§6Year ") } ?: "§6Year "
+        for (i in 1 until 6) {
+            extraLines = extraLines.filter { sidebarLines.nextAfter(votedLine, i) != it }
+        }
+
+        // remove that buggy redstone line wth hypixel
+        extraLines = extraLines.filter { "^\\s*e: §e§b(\\d{1,2}|100)%\$".toPattern().matcher(it).matches() }
     }
 }
