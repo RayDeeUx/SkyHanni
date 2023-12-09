@@ -357,7 +357,7 @@ enum class ScoreboardElements(
             Events.getEvent().flatMap { it.getLines().map { i -> i to AlignmentEnum.LEFT } }
         },
         {
-            true
+            Events.getEvent().isNotEmpty()
         },
         "§7Wide Range of Events\n§7(too much for this here)"
     ),
@@ -445,7 +445,7 @@ enum class ScoreboardElements(
             if (extraLines.isNotEmpty()) {
                 amountOfExtraLines = 0
             }
-            false
+            extraLines.isNotEmpty()
         },
         "§7Extra lines the mod is not detecting"
     ),
