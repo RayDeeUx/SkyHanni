@@ -46,7 +46,7 @@ object GardenNextJacobContest {
     private var dispatcher = Dispatchers.IO
     private var display = emptyList<Any>()
     private var simpleDisplay = emptyList<String>()
-    private var contests = mutableMapOf<SimpleTimeMark, FarmingContest>()
+    var contests = mutableMapOf<SimpleTimeMark, FarmingContest>()
     private var inCalendar = false
 
     private val patternDay = "§aDay (?<day>.*)".toPattern()
@@ -61,9 +61,9 @@ object GardenNextJacobContest {
     private var loadedContestsYear = -1
     private var nextContestsAvailableAt = -1L
 
-    private var lastFetchAttempted = 0L
-    private var isFetchingContests = false
-    private var fetchedFromElite = false
+    var lastFetchAttempted = 0L
+    var isFetchingContests = false
+    var fetchedFromElite = false
     private var isSendingContests = false
 
     @SubscribeEvent
@@ -349,7 +349,7 @@ object GardenNextJacobContest {
             val lineStripped = line.removeColor().trim()
             if (!lineStripped.startsWith("☘ ")) continue
             for (crop in nextContest.crops) {
-                if (line.removeColor().trim() == "☘ ${crop.cropName}") {
+                if (line.removeColor().trim().startsWith("☘ ${crop.cropName}")) {
                     return crop
                 }
             }
@@ -470,7 +470,7 @@ object GardenNextJacobContest {
         }
     }
 
-    private suspend fun fetchUpcomingContests() {
+    suspend fun fetchUpcomingContests() {
         try {
             val url = "https://api.elitebot.dev/contests/at/now"
             val result = withContext(dispatcher) { APIUtil.getJSONResponse(url) }.asJsonObject
