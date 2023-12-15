@@ -1,10 +1,10 @@
 package at.hannibal2.skyhanni.config.features.inventory.stacksize;
 
+import at.hannibal2.skyhanni.SkyHanniMod;
 import at.hannibal2.skyhanni.config.HasLegacyId;
 import com.google.gson.annotations.Expose;
 import io.github.moulberry.moulconfig.annotations.ConfigEditorDraggableList;
 import io.github.moulberry.moulconfig.annotations.ConfigOption;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -28,7 +28,13 @@ public class StackSizeConfig {
         ItemNumberEntry.CAMPFIRE
     ));
 
-    public enum ItemNumberEntry implements HasLegacyId {
+    public interface stackSizeDraggable {
+        boolean isSelected();
+
+        String name();
+    }
+
+    public enum ItemNumberEntry implements HasLegacyId, stackSizeDraggable {
         MASTER_STAR_TIER("§bMaster Star Tier", 0),
         MASTER_SKULL_TIER("§bMaster Skull Tier", 1),
         DUNGEON_HEAD_FLOOR_NUMBER("§bGolden/Diamond Dungeon Head Floor Number", 2),
@@ -60,9 +66,29 @@ public class StackSizeConfig {
 
         final String str;
         final int legacyId;
-        ItemNumberEntry(String str, int legacyId) { this.str = str; this.legacyId = legacyId; }
-        ItemNumberEntry(String str) { this(str, -1); }
-        @Override public String toString() { return str; }
-        @Override public int getLegacyId() { return legacyId; }
+
+        ItemNumberEntry(String str, int legacyId) {
+            this.str = str;
+            this.legacyId = legacyId;
+        }
+
+        ItemNumberEntry(String str) {
+            this(str, -1);
+        }
+
+        @Override
+        public String toString() {
+            return str;
+        }
+
+        @Override
+        public int getLegacyId() {
+            return legacyId;
+        }
+
+        @Override
+        public boolean isSelected() {
+            return SkyHanniMod.getFeature().inventory.stackSize.itemNumberAsStackSize.contains(this);
+        }
     }
 }
