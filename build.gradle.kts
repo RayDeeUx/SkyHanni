@@ -1,5 +1,4 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-import java.io.ByteArrayOutputStream
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompileimport java.io.ByteArrayOutputStream
 
 plugins {
     idea
@@ -7,7 +6,7 @@ plugins {
     id("gg.essential.loom") version "0.10.0.+"
     id("dev.architectury.architectury-pack200") version "0.1.3"
     id("com.github.johnrengelman.shadow") version "7.1.2"
-    kotlin("jvm") version "1.9.0"
+    kotlin("jvm") version "1.9.20"
     id("com.bnorm.power.kotlin-power-assert") version "0.13.0"
 }
 
