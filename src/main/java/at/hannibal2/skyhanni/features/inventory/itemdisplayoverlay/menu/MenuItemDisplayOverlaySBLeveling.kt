@@ -13,14 +13,14 @@ import net.minecraft.item.ItemStack
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 
 class MenuItemDisplayOverlaySBLeveling : AbstractMenuStackSize() {
-    private val guideTaskChestNamePattern by RepoPattern.pattern(("itemstacksize.sblevelingguidetask.chestname"), (".*(Guide |Task).*"))
-    private val progressPatternLoreLinePattern by RepoPattern.pattern(("itemstacksize.sblevelingprogresspattern.loreline"), (".*Progress.*: (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%"))
-    private val checkmarkItemNamePattern by RepoPattern.pattern(("itemstacksize.sblevelingcheckmark.itemname"), ("✔.*"))
-    private val progressToCompleteCategoryPercentLoreLinePattern by RepoPattern.pattern(("itemstacksize.sblevelingprogresstocompletecategorypercent.loreline"), (".*(§.)?Progress to Complete Category: (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%"))
-    private val rewardsSkyblockLevelingChestNamePattern by RepoPattern.pattern(("itemstacksize.sblevelingrewardsskyblockleveling.chestname"), (".*(rewards|skyblock leveling).*"))
-    private val progressToRewardsUnlockedPatternLoreLinePattern by RepoPattern.pattern(("itemstacksize.sblevelingprogresstorewardsunlockedpattern.loreline"), (".*(Progress to .*|Rewards Unlocked:) (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%"))
-    private val greenItemNamePattern by RepoPattern.pattern(("itemstacksize.sblevelinggreen.itemname"), ("^§a(\\S*)\$"))
-    private val emblemsUnlockedLoreLinePattern by RepoPattern.pattern(("itemstacksize.sblevelingemblemsunlocked.loreline"), ("(§.)?(?<emblems>[\\d]+) Unlocked"))
+    private val guideTaskChestNamePattern by RepoPattern.pattern(("itemstacksize.sbleveling.guidetask.chestname"), (".*(Guide |Task).*"))
+    private val progressPatternLoreLinePattern by RepoPattern.pattern(("itemstacksize.sbleveling.progresspattern.loreline"), (".*Progress.*: (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%"))
+    private val checkmarkItemNamePattern by RepoPattern.pattern(("itemstacksize.sbleveling.checkmark.itemname"), ("✔.*"))
+    private val progressToCompleteCategoryPercentLoreLinePattern by RepoPattern.pattern(("itemstacksize.sbleveling.progresstocompletecategorypercent.loreline"), (".*(§.)?Progress to Complete Category: (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%"))
+    private val rewardsSkyblockLevelingChestNamePattern by RepoPattern.pattern(("itemstacksize.sbleveling.rewardsskyblockleveling.chestname"), (".*(rewards|skyblock leveling).*"))
+    private val progressToRewardsUnlockedPatternLoreLinePattern by RepoPattern.pattern(("itemstacksize.sbleveling.progresstorewardsunlockedpattern.loreline"), (".*(Progress to .*|Rewards Unlocked:) (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%"))
+    private val greenItemNamePattern by RepoPattern.pattern(("itemstacksize.sbleveling.green.itemname"), ("^§a(\\S*)\$"))
+    private val emblemsUnlockedLoreLinePattern by RepoPattern.pattern(("itemstacksize.sbleveling.emblemsunlocked.loreline"), ("(§.)?(?<emblems>[\\d]+) Unlocked"))
 
     @SubscribeEvent
     override fun onRenderItemTip(event: RenderItemTipEvent) {
