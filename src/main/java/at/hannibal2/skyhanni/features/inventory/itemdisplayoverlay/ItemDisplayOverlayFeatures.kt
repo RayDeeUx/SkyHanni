@@ -65,10 +65,8 @@ import kotlin.math.log10
 
 object ItemDisplayOverlayFeatures : AbstractStackSize() {
 
-    // TODO USE SH-REPO
     private val config get() = configItemStackSize
 
-    // TODO repo
     // private val xOutOfYNoColorRequiredPattern = ((".*: (§.)?(?<useful>[0-9]+)(§.)?\\/(§.)?(?<total>[0-9]+).*").toPattern())
     private val masterStarInternalNamePattern by RepoPattern.pattern(("itemstacksize.itemdisplayoverlay.masterstar.internalname"), ("(?<tier>[A-Z])+_MASTER_STAR"))
     private val petLevelItemNamePattern by RepoPattern.pattern(("itemstacksize.itemdisplayoverlay.petlevel.itemname"), ("\\[Lvl (?<level>.*)] .*"))
