@@ -36,9 +36,7 @@ class MenuItemDisplayOverlayCombat : AbstractMenuStackSize() {
 
         if (stackSizeConfig.contains(StackSizeMenuConfig.Combat.BESTIARY_LEVEL)) {
             bestiaryChestNamePattern.matchMatcher(chestName) {
-                bestiaryMilestoneItemNamePattern.matchMatcher(itemName) {
-                        return group("milestone")
-                }
+                return bestiaryMilestoneItemNamePattern.returnGroupFromString("milestone", itemName)
             }
         }
 
@@ -65,26 +63,20 @@ class MenuItemDisplayOverlayCombat : AbstractMenuStackSize() {
             if (chestName == ("Slayer")) {
                 if (itemName.isNotEmpty() && lore.isNotEmpty()) {
                     for (line in lore) {
-                        slayerLevelLoreLinePattern.matchMatcher(line) {
-                            return group("level")
-                        }
+                        return slayerLevelLoreLinePattern.returnGroupFromString("level", line)
                     }
                 }
             }
             if (itemName == ("Boss Leveling Rewards")) {
                 for (line in lore) {
-                    slayerLevelOtherLoreLinePattern.matchMatcher(line) {
-                        return group("level")
-                    }
+                    return slayerLevelOtherLoreLinePattern.returnGroupFromString("level", line)
                 }
             }
         }
 
         if ((stackSizeConfig.contains(StackSizeMenuConfig.Combat.SLAYER_COMBAT_WISDOM_BUFF)) && (itemName == ("Global Combat Wisdom Buff"))) {
             for (line in item.getLore()) {
-                combatWisdomBuffLoreLinePattern.matchMatcher(line) {
-                    return group("combatWise")
-                }
+                return combatWisdomBuffLoreLinePattern.returnGroupFromString("combatWise", line)
             }
         }
 
@@ -96,9 +88,7 @@ class MenuItemDisplayOverlayCombat : AbstractMenuStackSize() {
 
         if (stackSizeConfig.contains(StackSizeMenuConfig.Combat.UNLOCKED_SLAYER_RECIPES) && itemName == ("Slayer Recipes")) {
             for (line in item.getLore()) {
-                unlockedSlayerRecipesLoreLinePattern.matchMatcher(line) {
-                    return group("recipes")
-                }
+                return unlockedSlayerRecipesLoreLinePattern.returnGroupFromString("recipes", line)
             }
         }
 
