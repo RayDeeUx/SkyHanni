@@ -118,9 +118,7 @@ class MenuItemDisplayOverlayMining : AbstractMenuStackSize() {
                 isHOTMTierUnlockedItemNamePattern.matchMatcher(nameWithColor) { return "" }
                 val lore = item.getLore()
                 if (lore.isNotEmpty()) {
-                    for (line in lore) {
-                        hotmLevelPercentProgressLoreLinePattern.returnPercentFromLoreLineAsStackSize(line)
-                    }
+                    return hotmLevelPercentProgressLoreLinePattern.returnPercentFromItemLoreAsStackSize(lore)
                 }
             }
         }
