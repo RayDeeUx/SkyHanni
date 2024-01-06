@@ -9,11 +9,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class StackSizeMenuConfig {
+    private final String stackSizeConfigDesc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, §4§l§oplease don't enable everything at once§r§c!";
 
     @Expose
     @ConfigOption(
         name = "General",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<PlayerGeneral> player = new ArrayList<>(Arrays.asList(
@@ -48,7 +49,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "Advanced",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<PlayerAdvanced> playerAdvanced = new ArrayList<>(Arrays.asList(
@@ -80,7 +81,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "Tryhard",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<PlayerTryhard> playerTryhard = new ArrayList<>(Arrays.asList(
@@ -110,7 +111,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "§aSB Levels§7",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<SBLeveling> sbLeveling = new ArrayList<>(Arrays.asList(
@@ -135,7 +136,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "§aCombat§7",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<Combat> combat = new ArrayList<>(Arrays.asList(
@@ -161,7 +162,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "§aFarming§7",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<Farming> farming = new ArrayList<>(Arrays.asList(
@@ -186,7 +187,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "§aMining§7",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<Mining> mining = new ArrayList<>(Arrays.asList(
@@ -209,7 +210,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "§aAb§9ip§5ho§6ne§ds§7",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<Abiphone> abiphone = new ArrayList<>(Arrays.asList(
@@ -238,7 +239,7 @@ public class StackSizeMenuConfig {
     @Expose
     @ConfigOption(
         name = "§aBingo Card§7",
-        desc = "Showing various pieces of information as a stack size for these menu items.\nSome values may be truncated percentages or §a✔§r§7s.\n§c§lWARNING§r§c: If you have any respect for your FPS, please §l§odon't§r§c enable §l§oeverything§r§c at once."
+        desc = stackSizeConfigDesc
     )
     @ConfigEditorDraggableList
     public List<Bingo> bingo = new ArrayList<>(Arrays.asList(
