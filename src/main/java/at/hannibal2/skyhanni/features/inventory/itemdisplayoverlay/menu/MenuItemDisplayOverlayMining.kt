@@ -15,7 +15,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 class MenuItemDisplayOverlayMining : AbstractMenuStackSize() {
     // private val genericPercentPattern = ".* (§.)?(?<percent>[0-9]+)(\\.[0-9]*)?(§.)?%".toPattern()
     private val hotmPerkLevelXOutOfYLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.hotmperklevelxoutofy.loreline"), ("(§.).* (?<useful>[0-9]+)(§.)?(\\/(§.)?(?<total>[0-9]+))?.*"))
-    private val rightClickToEnableDisableLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.rightclicktoenabledisable.loreline"), ("(§.)*Right.?click to (§.)*disable(§.)*!"))
+    private val rightClickToEnableDisableLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.rightclicktoenabledisable.loreline"), ("(§.)*Right.?click to (?<colorCode>§.)*disable(§.)*!"))
     private val skyMallCurrentEffectLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.skymallcurrenteffect.loreline"), (".*(§.)*Your Current Effect.*"))
     private val theSkymallCurrentEffectInQuestionLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.theskymallcurrenteffectinquestion.loreline"), ("(§.)*.*■ (§.)*(?<thePerk>.+)"))
     private val hotmPerkEnabledDisabledInProgressItemNamePattern by RepoPattern.pattern(("itemstacksize.mining.hotmperkenableddisabledinprogress.itemname"), ("§(a|e|c).*"))
@@ -104,6 +104,9 @@ class MenuItemDisplayOverlayMining : AbstractMenuStackSize() {
                         }
                     }
                     return "$colorCode$level"
+                }
+                rightClickToEnableDisableLoreLinePattern.matchMatcher(lore.last()) { //by process of elim, hotm perks past this line are clearly instant unlocked
+                    return "${group("colorCode")}!!" //for hotm perks that are one-click/instant unlock
                 }
             }
         }
