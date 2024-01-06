@@ -66,7 +66,9 @@ class MenuItemDisplayOverlaySBLeveling : AbstractMenuStackSize() {
             val nameWithColor = item.name ?: return ""
             if ((chestName == ("Emblems"))) {
                 greenItemNamePattern.matchMatcher(nameWithColor) {
-                    return emblemsUnlockedLoreLinePattern.returnGroupFromString("emblems", item.getLore().first())
+                    emblemsUnlockedLoreLinePattern.matchMatcher(item.getLore().first()) {
+                        return group("emblems")
+                    }
                 }
             }
         }
