@@ -435,7 +435,10 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
 
     private fun isShredder(internalName: NEUInternalName): Boolean = SHREDDER.isSelected() && internalName == shredderInternalName
     private fun getShredderTip(lore: List<String>): String {
-        return shredderBonusDamageLoreLinePattern.returnGroupFromItemLore("dmgbonus", lore)
+        for (line in lore) {
+            return shredderBonusDamageLoreLinePattern.returnGroupFromString("dmgbonus", line)
+        }
+        return ""
     }
 
     private fun isMinionStorage(item: ItemStack): Boolean = STORAGE_TIER.isSelected() && storageChestInternalNamePattern.matches(item.getInternalName()) && storageChestItemNamePattern.matches(item.cleanName())
