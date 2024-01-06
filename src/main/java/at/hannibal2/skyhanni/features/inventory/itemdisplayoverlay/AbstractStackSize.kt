@@ -18,14 +18,12 @@ abstract class AbstractStackSize {
         this.matchMatcher(input) { return group(groupName) }
         return ""
     }
-    fun Pattern.returnGroupFromItemLore(groupName: String, lore: List<String>): String {
-        for (line in lore) {
-            this.matchMatcher(line) { return group(groupName) }
-        }
-        return ""
-    }
 }
 
 abstract class AbstractMenuStackSize : AbstractStackSize()  {
     val configMenuStackSize get() = configItemStackSize.stackSize.menu
+    fun Pattern.returnPercentFromLoreLineAsStackSize(line: String): String {
+        this.matchMatcher(line) { return group("percent").replace("100", "§a✔") }
+        return ""
+    }
 }
