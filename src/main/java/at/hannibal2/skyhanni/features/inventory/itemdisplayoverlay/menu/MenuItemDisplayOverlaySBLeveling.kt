@@ -36,28 +36,22 @@ class MenuItemDisplayOverlaySBLeveling : AbstractMenuStackSize() {
         if (stackSizeConfig.contains(StackSizeMenuConfig.SBLeveling.GUIDE_PROGRESS)) {
             guideTaskChestNamePattern.matchMatcher(chestName) {
                 if (itemName.isNotEmpty()) {
-                    for (line in item.getLore()) {
-                        progressPatternLoreLinePattern.returnPercentFromItemLoreAsStackSize(line)
-                    }
                     checkmarkItemNamePattern.matchMatcher(itemName) {
                         return "§a✔"
                     }
+                        return progressPatternLoreLinePattern.returnPercentFromItemLoreAsStackSize(item.getLore())
                 }
             }
         }
 
         if (stackSizeConfig.contains(StackSizeMenuConfig.SBLeveling.WAYS_TO_LEVEL_UP_PROGRESS)) {
-            for (line in item.getLore()) {
-                progressToCompleteCategoryPercentLoreLinePattern.returnPercentFromItemLoreAsStackSize(line)
-            }
+            return progressToCompleteCategoryPercentLoreLinePattern.returnPercentFromItemLoreAsStackSize(item.getLore())
         }
 
         if (stackSizeConfig.contains(StackSizeMenuConfig.SBLeveling.SB_LEVELING_REWARDS)) {
             if ((itemName.isNotEmpty())) {
                 rewardsSkyblockLevelingChestNamePattern.matchMatcher(chestName.lowercase()) {
-                    for (line in item.getLore()) {
-                        progressToRewardsUnlockedPatternLoreLinePattern.returnPercentFromItemLoreAsStackSize(line)
-                    }
+                    return progressToRewardsUnlockedPatternLoreLinePattern.returnPercentFromItemLoreAsStackSize(item.getLore())
                 }
             }
         }
