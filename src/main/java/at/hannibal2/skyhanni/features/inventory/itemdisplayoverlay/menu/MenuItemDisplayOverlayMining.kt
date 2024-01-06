@@ -21,7 +21,7 @@ class MenuItemDisplayOverlayMining : AbstractMenuStackSize() {
     private val hotmPerkEnabledDisabledInProgressItemNamePattern by RepoPattern.pattern(("itemstacksize.mining.hotmperkenableddisabledinprogress.itemname"), ("§(a|e|c).*"))
     private val isNotHOTMPerkFirstCheckLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.isnothotmperkfirstcheck.loreline"), ("^((?!(§.)*Level ).)*\$"))
     private val isNotHOTMPerkSecondCheckLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.isnothotmperksecondcheck.loreline"), ("^((?!(§.)*(Right|Left).click to ).)*\$"))
-    private val lockedHOTMPerkLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.lockedhotmperk.loreline"), (".*(§.)*(Requires .*|.*the Mountain!).*"))
+    private val lockedHOTMPerkLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.lockedhotmperk.loreline"), (".*(§.)*(Requires .*|.*(the )?Mountain!).*"))
     private val isHOTMPerkMaxedItemNamePattern by RepoPattern.pattern(("itemstacksize.mining.ishotmperkmaxed.itemname"), ("§a.*"))
     private val isHOTMPerkDisabledLoreLinePattern by RepoPattern.pattern(("itemstacksize.mining.ishotmperkdisabled.loreline"), ("(§.)*(.*)click to (§.)*(enable).*"))
     private val isHOTMTierItemNamePattern by RepoPattern.pattern(("itemstacksize.mining.ishotmtier.itemname"), ("Tier (?<tier>[\\w]+)"))
