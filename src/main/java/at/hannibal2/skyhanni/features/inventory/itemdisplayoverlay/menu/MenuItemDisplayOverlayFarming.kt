@@ -52,7 +52,9 @@ class MenuItemDisplayOverlayFarming : AbstractMenuStackSize() {
         if (stackSizeConfig.contains(StackSizeMenuConfig.Farming.VISITOR_MILESTONES) && (chestName == "Visitor Milestones")) {
             val lore = item.getLore()
             if (lore.isNotEmpty()) {
-                return visitorMilestonePercentProgressLoreLinePattern.returnPercentFromItemLoreAsStackSize(lore)
+                for (line in lore) {
+                    visitorMilestonePercentProgressLoreLinePattern.returnPercentFromLoreLineAsStackSize(line)
+                }
             }
         }
 
