@@ -189,7 +189,8 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
 
     private fun isMasterSkull(internalName: NEUInternalName): Boolean = MASTER_SKULL_TIER.isSelected() && masterSkullInternalNamePattern.matches(internalName)
     private fun getMasterSkullTip(internalName: NEUInternalName): String {
-        return masterSkullInternalNamePattern.returnGroupFromString("tier", internalName.asString())
+        masterSkullInternalNamePattern.matchMatcher(internalName.asString()) { return group("tier") }
+        return ""
     }
 
     private fun isDungeonHead(internalName: NEUInternalName): Boolean = DUNGEON_HEAD_FLOOR_NUMBER.isSelected() && dungeonBossHeadInternalNamePattern.matches(internalName)
@@ -436,7 +437,9 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
     private fun isShredder(internalName: NEUInternalName): Boolean = SHREDDER.isSelected() && internalName == shredderInternalName
     private fun getShredderTip(lore: List<String>): String {
         for (line in lore) {
-            return shredderBonusDamageLoreLinePattern.returnGroupFromString("dmgbonus", line)
+            shredderBonusDamageLoreLinePattern.matchMatcher(line) {
+                return group("dmgbonus")
+            }
         }
         return ""
     }
