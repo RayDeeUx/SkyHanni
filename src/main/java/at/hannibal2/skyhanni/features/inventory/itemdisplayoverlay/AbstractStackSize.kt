@@ -28,10 +28,4 @@ abstract class AbstractStackSize {
 
 abstract class AbstractMenuStackSize : AbstractStackSize()  {
     val configMenuStackSize get() = configItemStackSize.stackSize.menu
-    fun Pattern.returnPercentFromItemLoreAsStackSize(lore: List<String>): String {
-        for (line in lore) {
-            this.matchMatcher(line) { return group("percent").replace("100", "§a✔") }
-        }
-        return ""
-    }
 }
