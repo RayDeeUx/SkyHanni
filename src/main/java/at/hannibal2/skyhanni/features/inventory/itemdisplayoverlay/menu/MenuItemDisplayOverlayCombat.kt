@@ -51,9 +51,7 @@ class MenuItemDisplayOverlayCombat : AbstractMenuStackSize() {
                     }
                 }
                 if (itemName.isNotEmpty()) {
-                    for (line in lore) {
-                        familiesCompletedOverallProgressPercentLoreLinePattern.returnPercentFromLoreLineAsStackSize(line)
-                    }
+                    familiesCompletedOverallProgressPercentLoreLinePattern.returnPercentFromItemLoreAsStackSize(lore)
                 }
             }
         }
@@ -62,28 +60,20 @@ class MenuItemDisplayOverlayCombat : AbstractMenuStackSize() {
             val lore = item.getLore()
             if (chestName == ("Slayer")) {
                 if (itemName.isNotEmpty() && lore.isNotEmpty()) {
-                    for (line in lore) {
-                        return slayerLevelLoreLinePattern.returnGroupFromString("level", line)
-                    }
+                    return slayerLevelLoreLinePattern.returnGroupFromItemLore("level", lore)
                 }
             }
             if (itemName == ("Boss Leveling Rewards")) {
-                for (line in lore) {
-                    return slayerLevelOtherLoreLinePattern.returnGroupFromString("level", line)
-                }
+                return slayerLevelOtherLoreLinePattern.returnGroupFromItemLore("level", lore)
             }
         }
 
         if ((stackSizeConfig.contains(StackSizeMenuConfig.Combat.SLAYER_COMBAT_WISDOM_BUFF)) && (itemName == ("Global Combat Wisdom Buff"))) {
-            for (line in item.getLore()) {
-                return combatWisdomBuffLoreLinePattern.returnGroupFromString("combatWise", line)
-            }
+            return combatWisdomBuffLoreLinePattern.returnGroupFromItemLore("combatWise", item.getLore())
         }
 
         if (stackSizeConfig.contains(StackSizeMenuConfig.Combat.RNG_METER_PROGRESS) && itemName == ("RNG Meter")) {
-            for (line in item.getLore()) {
-                rngMeterProgressPercentLoreLinePattern.returnPercentFromLoreLineAsStackSize(line)
-            }
+            return rngMeterProgressPercentLoreLinePattern.returnPercentFromItemLoreAsStackSize(item.getLore())
         }
 
         if (stackSizeConfig.contains(StackSizeMenuConfig.Combat.UNLOCKED_SLAYER_RECIPES) && itemName == ("Slayer Recipes")) {
