@@ -96,7 +96,7 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
     private val doesNotIncludeDungeonStarsItemNamePattern by itemDisplayOverlaySubgroup.pattern(("doesnotincludedungeonstars.itemname"), ("^(?:(?!✪).)*\$"))
     private val soulflowAccessoryInternalNamePattern by itemDisplayOverlaySubgroup.pattern(("soulflowaccessory.internalname"), ("SOULFLOW_.*"))
     private val isTradingWithPlayerChestNamePattern by itemDisplayOverlaySubgroup.pattern(("isinplayertradingmenu.chestname"), ("(You([\\t ]){2,}(?<theirName>[a-zA-Z0-9_]{2,16}))")) // see https://regex101.com/r/UDCQwR/1 for reference. -ery
-    private val isInAHOrNPCShopLoreLinePattern by itemDisplayOverlaySubgroup.pattern(("isavacuuminsideauctionhouseornpcshop.loreline"), ("(((§.)*Ends in: (§.)*(?<time>([\\d.,]+[ywdhms]+( )?)+))|Click to [tT]rade.)")) // see https://regex101.com/r/hyJEEe/1 for reference. -ery
+    private val isInAHOrNPCShopLoreLinePattern by itemDisplayOverlaySubgroup.pattern(("isinahornpcshop.loreline"), ("(((§.)*Ends in: (§.)*(?<time>([\\d.,]+[ywdhms]+( )?)+))|Click to [tT]rade.)")) // see https://regex101.com/r/hyJEEe/1 for reference. -ery
 
     private val newYearCakeInternalName = (("NEW_YEAR_CAKE").asInternalName())
     private val ranchersBootsInternalName = (("RANCHERS_BOOTS").asInternalName())
@@ -490,20 +490,20 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
     private fun getAbiphoneTip(internalName: NEUInternalName): String {
         return when (internalName.asString()) {
             "ABIPHONE_X_PLUS" -> "X"
-            "ABIPHONE_X_PLUS_SPECIAL_EDITION" -> "X§b§zSE"
+            "ABIPHONE_X_PLUS_SPECIAL_EDITION" -> "X§dSE"
             "ABIPHONE_XI_ULTRA" -> "11"
-            "ABIPHONE_XI_ULTRA_STYLE" -> "11§b§zS"
+            "ABIPHONE_XI_ULTRA_STYLE" -> "11§aS"
             "ABIPHONE_XII_MEGA" -> "12"
-            "ABIPHONE_XII_MEGA_COLOR" -> "12§b§zC"
+            "ABIPHONE_XII_MEGA_COLOR" -> "12§bC"
             "ABIPHONE_XIII_PRO" -> "13"
-            "ABIPHONE_XIII_PRO_GIGA" -> "13§b§zG"
+            "ABIPHONE_XIII_PRO_GIGA" -> "13§5G"
             "ABIPHONE_XIV_ENORMOUS" -> "14"
-            "ABIPHONE_XIV_ENORMOUS_BLACK" -> "§714"
-            "ABIPHONE_XIV_ENORMOUS_PURPLE" -> "§714"
-            "ABIPHONE_FLIP_DRAGON" -> "Fl§b§zD"
-            "ABIPHONE_FLIP_NUCLEUS" -> "Fl§b§zN"
-            "ABIPHONE_FLIP_VOLCANO" -> "Fl§b§zV"
-            "ABINGOPHONE" -> "Ⓑ"
+            "ABIPHONE_XIV_ENORMOUS_BLACK" -> "14§7B"
+            "ABIPHONE_XIV_ENORMOUS_PURPLE" -> "14§dP"
+            "ABIPHONE_FLIP_DRAGON" -> "Fl§dD"
+            "ABIPHONE_FLIP_NUCLEUS" -> "Fl§5N"
+            "ABIPHONE_FLIP_VOLCANO" -> "Fl§6V"
+            "ABINGOPHONE" -> "§cⒷ"
             else -> ""
         }
     }
