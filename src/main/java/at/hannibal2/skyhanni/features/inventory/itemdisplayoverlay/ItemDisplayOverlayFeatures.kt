@@ -381,7 +381,7 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
     private fun isArmadillo(internalName: NEUInternalName): Boolean = ARMADILLO.isSelected() && internalName == prehistoricEggInternalName
     private fun getArmadilloTip(item: ItemStack): String {
         val lore = item.getLore()
-        if (lore.lastOrNull() == null) return ""
+        if (lore.isEmpty()) return ""
         val blocksWalked = item.getPrehistoricEggBlocksWalked() ?: return ""
         var rarity = ""
         for (line in lore) {
@@ -442,23 +442,14 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
 
     private fun isMinionStorage(item: ItemStack): Boolean = STORAGE_TIER.isSelected() && storageChestInternalNamePattern.matches(item.getInternalName()) && storageChestItemNamePattern.matches(item.cleanName())
     private fun getMinionStorageTip(itemName: String): String {
-        val numSlots = when (itemName) {
-            ("Small Storage") -> "3"
-            ("Medium Storage") -> "9"
-            ("Large Storage") -> "15"
-            ("X-Large Storage") -> "21"
-            ("XX-Large Storage") -> "27"
+        return when (itemName) {
+            ("Small Storage") -> "§f3"
+            ("Medium Storage") -> "§a9"
+            ("Large Storage") -> "§915"
+            ("X-Large Storage") -> "§c21"
+            ("XX-Large Storage") -> "§c27"
             else -> ""
         }
-        val colorCode = when (itemName) {
-            ("Small Storage") -> "f"
-            ("Medium Storage") -> "a"
-            ("Large Storage") -> "9"
-            ("X-Large Storage") -> "c"
-            ("XX-Large Storage") -> "c"
-            else -> ""
-        }
-        return "§$colorCode$numSlots"
     }
 
     private fun isCompactorOrDeletorItem(internalName: NEUInternalName, itemName: String): Boolean = COMPACTOR_DELETOR.isSelected() && personalCompactorDeletorInternalNamePattern.matches(internalName) && personalCompactorDeletorItemNamePattern.matches(itemName)
