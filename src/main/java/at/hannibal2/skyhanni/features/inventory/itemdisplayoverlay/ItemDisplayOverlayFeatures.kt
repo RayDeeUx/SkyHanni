@@ -80,7 +80,7 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
     private val kuudraKeyItemNamePattern by itemDisplayOverlaySubgroup.pattern(("kuudrakey.itemname"), ("([\\w ]+)?Kuudra Key"))
     private val kuudraKeyInternalNamePattern by itemDisplayOverlaySubgroup.pattern(("kuudrakey.internalname"), ("KUUDRA_(?<tier>[\\w]+)_KEY"))
     private val larvaHookLoreLinePattern by itemDisplayOverlaySubgroup.pattern(("larvahook.loreline"), ("§7§7You may harvest §6(?<amount>.).*"))
-    private val armadilloRarityLoreLinePattern by itemDisplayOverlaySubgroup.pattern(("armadillorarity.loreline"), ("(§.)*(?<rarity>COMMON|UNCOMMON|RARE|EPIC|LEGENDARY)"))
+    private val armadilloRarityLoreLinePattern by itemDisplayOverlaySubgroup.pattern(("armadillorarity.loreline"), ("(?<rarityColorCode>§.)*(?<rarity>COMMON|UNCOMMON|RARE|EPIC|LEGENDARY)"))
     private val beastmasterCrestInternalNamePattern by itemDisplayOverlaySubgroup.pattern(("beastmastercrest.internalname"), ("BEASTMASTER_CREST_[\\w]*"))
     private val beastmasterCrestKillsProgressLoreLinePattern by itemDisplayOverlaySubgroup.pattern(("beastmastercrestkillsprogress.loreline"), ("(§.)*Your kills: (§.)*(?<progress>[\\w,]+)(§.)*\\/(?<total>[\\w,]+)"))
     private val campfireTalismanTierInternalNamePattern by itemDisplayOverlaySubgroup.pattern(("campfiretalismantier.internalname"), ("CAMPFIRE_TALISMAN_(?<tier>[\\d]+)"))
@@ -384,8 +384,12 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
         if (lore.isEmpty()) return ""
         val blocksWalked = item.getPrehistoricEggBlocksWalked() ?: return ""
         var rarity = ""
+        var rarityColorCode = ""
         for (line in lore) {
-            armadilloRarityLoreLinePattern.matchMatcher(line) { rarity = group("rarity") }
+            armadilloRarityLoreLinePattern.matchMatcher(line) {
+                rarity = group("rarity")
+                rarityColorCode = group("rarityColorCode")
+            }
         }
         val threshold = when (rarity) {
             "COMMMON" -> 4_000F
@@ -395,7 +399,7 @@ object ItemDisplayOverlayFeatures : AbstractStackSize() {
             "LEGENDARY" -> 100_000F
             else -> 1F
         }
-        return if (threshold != 1F) { "${((blocksWalked.toFloat() / threshold) * 100).toInt()}" } else ""
+        return if (threshold != 1F) { "$rarityColorCode${((blocksWalked.toFloat() / threshold) * 100).toInt()}" } else ""
     }
 
     private fun isCampfireAccessory(internalName: NEUInternalName): Boolean = CAMPFIRE.isSelected() && campfireTalismanTierInternalNamePattern.matches(internalName)
