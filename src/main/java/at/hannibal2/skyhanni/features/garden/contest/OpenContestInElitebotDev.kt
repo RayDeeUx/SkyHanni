@@ -141,13 +141,13 @@ object OpenContestInElitebotDev {
         val year = yString.formatNumber().toInt()
         val month = LorenzUtils.getSBMonthByName(mString.replace(" Fall", " Autumn"))
         val day = dString.formatNumber().toInt()
-        if (mString == "" && dString == "" && SkyBlockTime(year).passesCalendarDateSanityCheck()) {
+        if (mString == "" && dString == "" && SkyBlockTime(year).isValidContest()) {
             LorenzUtils.chat("Opening the year-specfic contests page for $sbDate.")
             OSUtils.openBrowser("$ELITEBOT_CONTESTS/$year/$ELITEBOT_RECORDS_SUFFIX")
-        } else if (dString == "" && SkyBlockTime(year, month).passesCalendarDateSanityCheck()) {
+        } else if (dString == "" && SkyBlockTime(year, month).isValidContest()) {
             LorenzUtils.chat("Opening the contests page for $sbDate.")
             OSUtils.openBrowser("$ELITEBOT_CONTESTS/$year/$month")
-        } else if (SkyBlockTime(year, month, day).passesCalendarDateSanityCheck()) {
+        } else if (SkyBlockTime(year, month, day).isValidContest()) {
             LorenzUtils.chat("Opening the contests page ${if (fromCommand) "closest to" else "for"} $sbDate.")
             OSUtils.openBrowser("$ELITEBOT_CONTESTS/$year/$month/$day")
         }
@@ -190,6 +190,6 @@ object OpenContestInElitebotDev {
         }
     }
 
-    private fun SkyBlockTime.passesCalendarDateSanityCheck(): Boolean = this.asTimeMark() in EARLIEST_CONTEST..SkyBlockTime.now().asTimeMark()
+    private fun SkyBlockTime.isValidContest(): Boolean = this.asTimeMark() in EARLIEST_CONTEST..SkyBlockTime.now().asTimeMark()
     private fun isEnabled() = config.enabled
 }
