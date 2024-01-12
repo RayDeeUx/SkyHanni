@@ -189,6 +189,6 @@ object OpenContestInElitebotDev {
         }
     }
 
-    private fun SkyBlockTime.passesCalendarDateSanityCheck(): Boolean = this.asTimeMark() >= EARLIEST_CONTEST
+    private fun SkyBlockTime.passesCalendarDateSanityCheck(): Boolean = this.asTimeMark() in EARLIEST_CONTEST..SkyBlockTime.now().asTimeMark()
     private fun isEnabled() = config.enabled
 }
