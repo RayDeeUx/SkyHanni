@@ -7,7 +7,6 @@ import at.hannibal2.skyhanni.utils.ItemUtils.cleanName
 import at.hannibal2.skyhanni.utils.ItemUtils.getLore
 import at.hannibal2.skyhanni.utils.KeyboardManager.isKeyHeld
 import at.hannibal2.skyhanni.utils.LorenzUtils
-import at.hannibal2.skyhanni.utils.LorenzUtils.getSBMonthByName
 import at.hannibal2.skyhanni.utils.NumberUtil.formatNumber
 import at.hannibal2.skyhanni.utils.OSUtils
 import at.hannibal2.skyhanni.utils.SimpleTimeMark
@@ -86,7 +85,7 @@ object OpenContestInElitebotDev {
                     sbDate = "$origMonthString $origDayString, Year $origYearString"
                 }
             }
-            openContest(origYearString.formatNumber(), getSBMonthByName(origMonthString), origDayString.formatNumber().toInt(), sbDate)
+            openContest(origYearString.formatNumber(), LorenzUtils.getSBMonthByName(origMonthString), origDayString.formatNumber().toInt(), sbDate)
         }
     }
     private fun sendUsageMessagesCalendarDate() {
@@ -124,9 +123,9 @@ object OpenContestInElitebotDev {
                 } else if (dayString.isEmpty() && monthString.isEmpty() && yearString.isNotEmpty()) {
                     openContest(yearString.formatNumber(), sbDate = "Year $yearString")
                 } else if (dayString.isEmpty() && monthString.isNotEmpty() && yearString.isNotEmpty()) {
-                    openContest(yearString.formatNumber(), getSBMonthByName(monthString.replace(" Fall", " Autumn")), sbDate = "$monthString, Year $yearString")
+                    openContest(yearString.formatNumber(), LorenzUtils.getSBMonthByName(monthString.replace(" Fall", " Autumn")), sbDate = "$monthString, Year $yearString")
                 } else if (dayString.isNotEmpty() && monthString.isNotEmpty() && yearString.isNotEmpty()) {
-                    openContest(yearString.formatNumber(), getSBMonthByName(monthString.replace(" Fall", " Autumn")), dayString.formatNumber().toInt(), calendarDateString, true)
+                    openContest(yearString.formatNumber(), LorenzUtils.getSBMonthByName(monthString.replace(" Fall", " Autumn")), dayString.formatNumber().toInt(), calendarDateString, true)
                 } else {
                     LorenzUtils.chat("§cIf you're reading this inside Minecraft, something went wrong with parsing your calendar date string. Please copy your original input below and report this bug on the SkyHanni Discord server.")
                     LorenzUtils.chat(calendarDateString)
