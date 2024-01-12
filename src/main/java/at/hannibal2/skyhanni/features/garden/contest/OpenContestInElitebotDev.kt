@@ -124,9 +124,9 @@ object OpenContestInElitebotDev {
                 } else if (dayString.isEmpty() && monthString.isEmpty() && yearString.isNotEmpty()) {
                     openContest(yearString.formatNumber(), sbDate = "Year $yearString")
                 } else if (dayString.isEmpty() && monthString.isNotEmpty() && yearString.isNotEmpty()) {
-                    openContest(yearString.formatNumber(), getSBMonthByName(monthString), sbDate = "$monthString, Year $yearString")
+                    openContest(yearString.formatNumber(), getSBMonthByName(monthString.replace(" Fall", " Autumn")), sbDate = "$monthString, Year $yearString")
                 } else if (dayString.isNotEmpty() && monthString.isNotEmpty() && yearString.isNotEmpty()) {
-                    openContest(yearString.formatNumber(), getSBMonthByName(monthString), dayString.formatNumber().toInt(), calendarDateString, true)
+                    openContest(yearString.formatNumber(), getSBMonthByName(monthString.replace(" Fall", " Autumn")), dayString.formatNumber().toInt(), calendarDateString, true)
                 } else {
                     LorenzUtils.chat("§cIf you're reading this inside Minecraft, something went wrong with parsing your calendar date string. Please copy your original input below and report this bug on the SkyHanni Discord server.")
                     LorenzUtils.chat(calendarDateString)
