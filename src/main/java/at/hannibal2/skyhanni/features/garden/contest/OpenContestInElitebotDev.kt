@@ -48,12 +48,12 @@ object OpenContestInElitebotDev {
         "contest.loreline",
         "(?:§.)*(?:[\\S ]+)?\\d+:\\d+ [ap]m(?:-|[\\S ]+)\\d+:\\d+ [ap]m: (?:§.)*Jacob's Farming Contest(?:§.)*(?: \\((?:§.)*(?:\\d+[ywhm] )*\\d+s(?:§.)*\\)| \\((?:§.)*[\\S ]+(?:§.)*\\))?"
     )
-    private val calendarDateStringCommandPattern by elitebotDevRepoGroup.pattern(
-        "calendardatestring.command",
+    private val dateStringPattern by elitebotDevRepoGroup.pattern(
+        "date.string.command",
         "(?<sbTime>(?<month>(?:Early |Late )?(?:Winter|Spring|Summer|Autumn|Fall))?(?: (?<date>\\d+)(?:nd|rd|th|st)?)?(?:,? )?Year (?<year>[\\d,.]+))"
     )
-    private val calendarDateNumberCommandPattern by elitebotDevRepoGroup.pattern(
-        "calendardatenumber.command",
+    private val dateNumberPattern by elitebotDevRepoGroup.pattern(
+        "date.number.command",
         "(?<one>\\d+[ymd]) (?<two>\\d+[ymd]) (?<three>\\d+[ymd])"
     )
 
@@ -112,8 +112,8 @@ object OpenContestInElitebotDev {
             return
         }
         val calendarDateString = args.joinToString(" ")
-        if (calendarDateStringCommandPattern.matches(calendarDateString)) {
-            calendarDateStringCommandPattern.matchMatcher(calendarDateString) {
+        if (dateStringPattern.matches(calendarDateString)) {
+            dateStringPattern.matchMatcher(calendarDateString) {
                 val sbTime = group("sbTime") ?: ""
                 val yearString = group("year") ?: ""
                 val monthString = group("month") ?: ""
@@ -124,9 +124,9 @@ object OpenContestInElitebotDev {
                 } else if (dayString.isEmpty() && monthString.isEmpty() && yearString.isNotEmpty()) {
                     openContest(yearString.formatNumber(), sbDate = "Year $yearString")
                 } else if (dayString.isEmpty() && monthString.isNotEmpty() && yearString.isNotEmpty()) {
-                    openContest(yearString.formatNumber(), monthString.convertMonthNameToInt(), sbDate = "$monthString, Year $yearString")
+                    openContest(yearString.formatNumber(), getSBMonthByName(monthString), sbDate = "$monthString, Year $yearString")
                 } else if (dayString.isNotEmpty() && monthString.isNotEmpty() && yearString.isNotEmpty()) {
-                    openContest(yearString.formatNumber(), monthString.convertMonthNameToInt(), dayString.formatNumber().toInt(), calendarDateString, true)
+                    openContest(yearString.formatNumber(), getSBMonthByName(monthString), dayString.formatNumber().toInt(), calendarDateString, true)
                 } else {
                     LorenzUtils.chat("§cIf you're reading this inside Minecraft, something went wrong with parsing your calendar date string. Please copy your original input below and report this bug on the SkyHanni Discord server.")
                     LorenzUtils.chat(calendarDateString)
@@ -164,8 +164,8 @@ object OpenContestInElitebotDev {
             sendUsageMessagesNumbers(argsAsOneString)
             return
         }
-        if (calendarDateNumberCommandPattern.matches(argsAsOneString)) {
-            calendarDateNumberCommandPattern.matchMatcher(argsAsOneString) {
+        if (dateNumberPattern.matches(argsAsOneString)) {
+            dateNumberPattern.matchMatcher(argsAsOneString) {
                 val timeUnitsStrings: List<String> = listOf<String>(group("one") ?: "", group("two") ?: "", group("three") ?: "")
                 if (timeUnitsStrings.any { it.isEmpty() }) {
                     sendUsageMessagesNumbers(argsAsOneString)
