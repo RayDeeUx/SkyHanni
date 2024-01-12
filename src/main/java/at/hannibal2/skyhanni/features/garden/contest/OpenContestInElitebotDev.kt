@@ -144,7 +144,7 @@ object OpenContestInElitebotDev {
             OSUtils.openBrowser("$ELITEBOT_CONTESTS/$year/$ELITEBOT_RECORDS_SUFFIX")
         } else if (day == -1 && SkyBlockTime(year, month).passesCalendarDateSanityCheck()) {
             LorenzUtils.chat("Opening the contests page for $sbDate.")
-            OSUtils.openBrowser("$$ELITEBOT_CONTESTS/$year/$month")
+            OSUtils.openBrowser("$ELITEBOT_CONTESTS/$year/$month")
         } else if (SkyBlockTime(year, month, day).passesCalendarDateSanityCheck()) {
             val onExactDate = if (fromCommand) "nearest to" else "for"
             LorenzUtils.chat("Opening the contests page $onExactDate $sbDate.")
