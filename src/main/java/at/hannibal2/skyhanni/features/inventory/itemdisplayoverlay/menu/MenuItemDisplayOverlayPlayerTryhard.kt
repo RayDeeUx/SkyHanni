@@ -6,7 +6,6 @@ import at.hannibal2.skyhanni.features.inventory.itemdisplayoverlay.AbstractMenuS
 import at.hannibal2.skyhanni.utils.InventoryUtils
 import at.hannibal2.skyhanni.utils.ItemUtils.cleanName
 import at.hannibal2.skyhanni.utils.ItemUtils.getLore
-import at.hannibal2.skyhanni.utils.ItemUtils.name
 import at.hannibal2.skyhanni.utils.NumberUtil
 import at.hannibal2.skyhanni.utils.NumberUtil.formatNumber
 import at.hannibal2.skyhanni.utils.NumberUtil.romanToDecimalIfNecessary
@@ -175,26 +174,6 @@ class MenuItemDisplayOverlayPlayerTryhard : AbstractMenuStackSize() {
     private val deliveriesItemPattern by playerTryhardSubgroup.pattern(
         "island.management.deliveries.itemname",
         ".* Deliveries"
-    )
-    private val playtimeChestPattern by playerTryhardSubgroup.pattern(
-        "playtime.chestname",
-        "Detailed .?[pP]laytime"
-    )
-    private val playtimeBreakdownPattern by playerTryhardSubgroup.pattern(
-        "playtime.breakdown.loreline",
-        "(?:§.)*Totalling (?:§.)*(?<pt>[\\d,]+)(?:\\.\\d*)?(?: (?:§.)*hours(?: (?:§.)*on(?: (?:§.)*this(?: (?:§.)*profile.)?)?)?)?"
-    )
-    private val breakdownItemPattern by playerTryhardSubgroup.pattern(
-        "playtime.breakdown.itemname",
-        ".?[pP]laytime Breakdown"
-    )
-    private val islandPlaytimePattern by playerTryhardSubgroup.pattern(
-        "playtime.island.loreline",
-        "(?:§.)*Playtime: (?:§.)*(?<minute>[\\d,]+)(?:\\.\\d*)? minutes?"
-    )
-    private val islandItemColoredPattern by playerTryhardSubgroup.pattern(
-        "playtime.island.itemname.colored",
-        "§a.*"
     )
 
     @SubscribeEvent
@@ -456,30 +435,11 @@ class MenuItemDisplayOverlayPlayerTryhard : AbstractMenuStackSize() {
             }
         }
 
-        if (stackSizeConfig.contains(StackSizeMenuConfig.PlayerTryhard.ACHIEVEMENT_PLAYTIME)) {
-            val lore = item.getLore()
-            if (chestName == "Your Equipment and Stats" && itemName.lowercase() == "skyblock achievements") {
-                for (line in lore) {
-                    achievementPointsPattern.matchMatcher(line) {
-                        return group("percent")
-                    }
-                }
-            }
-            playtimeChestPattern.matchMatcher(chestName) {
-                breakdownItemPattern.matchMatcher(itemName) {
-                    for (line in lore) {
-                        playtimeBreakdownPattern.matchMatcher(line) {
-                            return NumberUtil.format(group("pt").formatNumber())
-                        }
-                    }
-                }
-                val nameWithColor = item.name ?: ""
-                islandItemColoredPattern.matchMatcher(nameWithColor) {
-                    for (line in lore) {
-                        islandPlaytimePattern.matchMatcher(line) {
-                            return NumberUtil.format(group("minute").formatNumber())
-                        }
-                    }
+        if (stackSizeConfig.contains(StackSizeMenuConfig.PlayerTryhard.SKYBLOCK_ACHIEVEMENT_POINTS) && (chestName == ("Your Equipment and Stats") && itemName.lowercase() == ("skyblock achievements"))) {
+            // §7Points: §e1,995§7/§e2,835 §8(70%§8)
+            for (line in item.getLore()) {
+                achievementPointsPattern.matchMatcher(line) {
+                    return group("percent")
                 }
             }
         }
