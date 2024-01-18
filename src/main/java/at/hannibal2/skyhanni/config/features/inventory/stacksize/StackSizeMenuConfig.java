@@ -93,14 +93,14 @@ public class StackSizeMenuConfig {
     public enum PlayerTryhard {
         MENU_NAVIGATION("§bMenu Pagination, Sort/Filter Abbvs, Selected Tab"), // §b(Menu Pagination: Shows page numbers.\nSort/Filter Abbvs: AH/Abiphones have their own abbreviation config options.\nSelected Tabs: §a⬇§bs in Community Shop, §a➡§bs in AH + BZ)
         RNG_METER_ODDS("§bRNG Meter Drop Odds"), // (Abbvs)
-        COMMUNITY_ESSENCE_UPGRADES("§bCommunity + Essence Shops Upgrade Tiers"), // (#)
+        COMMUNITY_ESSENCE_UPGRADES("§bCommunity/Essence Shops Upgrade Tiers"), // (#)
         BOOKSHELF_POWER("§bBookshelf Power"), // (#)
         FAME_RANK_BITS("§bFame Rank, Fame Count, Bits Available"), // (Abbvs)
         BOOSTER_COOKIE_POTION_EFFECTS("§bBooster Cookie Duration + Active Potion Effects"), //§b[highest unit of time only: Xy ➡ Xd ➡ Xh ➡ etc...]
         DELIVERIES_PROJECTS("§bJerry Deliveries, Project Contributions"), // (Includes)
         ACCESSORY_BAG_UTILS("§bAccessory Bag Utils"), // (Various)
         EVENT_COUNTDOWN_ABBV("§bEvents \"Start(ing) in\" Countdowns"), //§b[highest unit of time only: Xy ➡ Xd ➡ Xh ➡ etc...]
-        SKYBLOCK_ACHIEVEMENT_POINTS("§bSkyBlock Achievements Points"), // (%)
+        ACHIEVEMENT_PLAYTIME("§bSkyBlock Achievements Points, Detailed Playtime"), // (%)
         ;
 
         final String str;
