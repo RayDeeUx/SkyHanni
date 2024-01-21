@@ -1,29 +1,29 @@
 package at.hannibal2.skyhanni.test.command
 
 import at.hannibal2.skyhanni.SkyHanniMod
+import at.hannibal2.skyhanni.test.command.ErrorManager.logErrorWithData
 import at.hannibal2.skyhanni.utils.KeyboardManager
 import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.OSUtils
 import at.hannibal2.skyhanni.utils.StringUtils.removeColor
-import com.google.common.cache.CacheBuilder
+import at.hannibal2.skyhanni.utils.TimeLimitedSet
 import net.minecraft.client.Minecraft
 import java.util.UUID
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.minutes
 
 object ErrorManager {
     // random id -> error message
     private val errorMessages = mutableMapOf<String, String>()
     private val fullErrorMessages = mutableMapOf<String, String>()
-    private var cache =
-        CacheBuilder.newBuilder().expireAfterWrite(10, TimeUnit.MINUTES).build<Pair<String, Int>, Unit>()
+    private var cache = TimeLimitedSet<Pair<String, Int>>(10.minutes)
 
     fun resetCache() {
-        cache.asMap().clear()
+        cache.clear()
     }
 
     fun skyHanniError(message: String): Nothing {
         val exception = IllegalStateException(message)
-        logError(exception, message)
+        logErrorWithData()
         throw exception
     }
 
@@ -77,10 +77,10 @@ object ErrorManager {
 
         if (!ignoreErrorCache) {
             val pair = if (throwable.stackTrace.isNotEmpty()) {
-                throwable.stackTrace[0].let { it.fileName to it.lineNumber }
+                throwable.stackTrace[0].let { it.fileName!! to it.lineNumber }
             } else message to 0
-            if (cache.getIfPresent(pair) != null) return
-            cache.put(pair, Unit)
+            if (cache.contains(pair)) return
+            cache.add(pair)
         }
 
         val fullStackTrace = throwable.getCustomStackTrace(true).joinToString("\n")

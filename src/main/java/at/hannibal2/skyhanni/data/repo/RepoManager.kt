@@ -2,11 +2,13 @@ package at.hannibal2.skyhanni.data.repo
 
 import at.hannibal2.skyhanni.SkyHanniMod
 import at.hannibal2.skyhanni.config.ConfigManager
+import at.hannibal2.skyhanni.events.DebugDataCollectEvent
 import at.hannibal2.skyhanni.events.RepositoryReloadEvent
 import at.hannibal2.skyhanni.test.command.ErrorManager
 import at.hannibal2.skyhanni.utils.LorenzUtils
 import com.google.gson.JsonObject
 import net.minecraft.client.Minecraft
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent
 import org.apache.commons.io.FileUtils
 import java.io.BufferedReader
 import java.io.BufferedWriter
@@ -114,7 +116,6 @@ class RepoManager(private val configLocation: File) {
                         e
                     ).printStackTrace()
                     if (command) {
-                        LorenzUtils.error("An error occurred while trying to reload the repo! See logs for more info.")
                     }
                     return@supplyAsync false
                 }
@@ -172,15 +173,33 @@ class RepoManager(private val configLocation: File) {
         return comp
     }
 
+    @SubscribeEvent
+    fun onDebugDataCollect(event: DebugDataCollectEvent) {
+        event.title("Repo Status")
+
+        if (unsuccessfulConstants.isEmpty() && successfulConstants.isNotEmpty()) {
+            event.addIrrelevant("Repo working fine")
+            return
+        }
+
+        event.addData {
+            add("Successful Constants (${successfulConstants.size}):")
+
+            add("Unsuccessful Constants (${unsuccessfulConstants.size}):")
+
+            for ((i, constant) in unsuccessfulConstants.withIndex()) {
+                add("   - $constant")
+                if (i == 5) {
+                    add("...")
+                    break
+                }
+            }
+        }
+    }
+
     fun displayRepoStatus(joinEvent: Boolean) {
         if (joinEvent) {
             if (unsuccessfulConstants.isNotEmpty()) {
-                LorenzUtils.error(
-                    "§7Repo Issue! Some features may not work. Please report this error on the Discord!\n"
-                        + "§7Repo Auto Update Value: §c${SkyHanniMod.feature.dev.repoAutoUpdate}\n"
-                        + "§7If you have Repo Auto Update turned off, please try turning that on.\n"
-                        + "§cUnsuccessful Constants §7(${unsuccessfulConstants.size}):"
-                )
                 for (constant in unsuccessfulConstants) {
                     LorenzUtils.chat("   §e- §7$constant")
                 }
@@ -191,7 +210,10 @@ class RepoManager(private val configLocation: File) {
             LorenzUtils.chat("Repo working fine!", prefixColor = "§a")
             return
         }
-        if (successfulConstants.isNotEmpty()) LorenzUtils.chat("Successful Constants §7(${successfulConstants.size}):", prefixColor = "§a")
+        if (successfulConstants.isNotEmpty()) LorenzUtils.chat(
+            "Successful Constants §7(${successfulConstants.size}):",
+            prefixColor = "§a"
+        )
         for (constant in successfulConstants) {
             LorenzUtils.chat("   §a- §7$constant")
         }
