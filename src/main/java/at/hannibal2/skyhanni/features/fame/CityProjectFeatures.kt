@@ -16,8 +16,6 @@ import at.hannibal2.skyhanni.utils.LorenzColor
 import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.LorenzUtils.addAsSingletonList
 import at.hannibal2.skyhanni.utils.NEUItems
-import at.hannibal2.skyhanni.utils.NEUItems.getInternalNameFromItemName
-import at.hannibal2.skyhanni.utils.NEUItems.getItemStack
 import at.hannibal2.skyhanni.utils.NumberUtil
 import at.hannibal2.skyhanni.utils.NumberUtil.addSeparators
 import at.hannibal2.skyhanni.utils.RenderUtils.highlight
@@ -25,7 +23,6 @@ import at.hannibal2.skyhanni.utils.RenderUtils.renderStringsAndItems
 import at.hannibal2.skyhanni.utils.StringUtils.matchMatcher
 import at.hannibal2.skyhanni.utils.StringUtils.matches
 import at.hannibal2.skyhanni.utils.TimeUtils
-import at.hannibal2.skyhanni.utils.TimeUtils.getDuration
 import at.hannibal2.skyhanni.utils.renderables.Renderable
 import at.hannibal2.skyhanni.utils.repopatterns.RepoPattern
 import net.minecraft.client.Minecraft
@@ -122,7 +119,7 @@ class CityProjectFeatures {
                     contributeAgainPattern.matchMatcher(line) {
                         val rawTime = group("time")
                         if (rawTime.contains("Soon!")) return@matchMatcher
-                        val duration = getDuration()
+                        val duration = TimeUtils.getMillis(rawTime)
                         val endTime = System.currentTimeMillis() + duration
                         if (endTime < nextTime) {
                             nextTime = endTime
@@ -152,7 +149,7 @@ class CityProjectFeatures {
         }
 
         for ((internalName, amount) in materials) {
-            val stack = getItemStack()
+            val stack = NEUItems.getItemStack(internalName)
             val name = stack.name ?: continue
             val list = mutableListOf<Any>()
             list.add(" §7- ")
@@ -188,7 +185,7 @@ class CityProjectFeatures {
             if (line.contains("Bits")) break
 
             val (name, amount) = ItemUtils.readItemAmount(line) ?: continue
-            val internalName = getInternalNameFromItemName()
+            val internalName = NEUItems.getRawInternalName(name)
             val old = materials.getOrPut(internalName) { 0 }
             materials[internalName] = old + amount
         }
