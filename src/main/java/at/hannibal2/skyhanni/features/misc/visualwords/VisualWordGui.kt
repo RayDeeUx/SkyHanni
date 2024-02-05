@@ -3,7 +3,6 @@ package at.hannibal2.skyhanni.features.misc.visualwords
 import at.hannibal2.skyhanni.SkyHanniMod
 import at.hannibal2.skyhanni.config.ConfigManager
 import at.hannibal2.skyhanni.test.command.ErrorManager
-import at.hannibal2.skyhanni.test.command.ErrorManager.logErrorWithData
 import at.hannibal2.skyhanni.utils.*
 import at.hannibal2.skyhanni.utils.LorenzUtils.chat
 import at.hannibal2.skyhanni.utils.StringUtils.convertToFormatted
@@ -588,7 +587,7 @@ open class VisualWordGui : GuiScreen() {
                 drawImport = false
             }
         } catch (t: Throwable) {
-            logErrorWithData()
+            ErrorManager.logError(t, "Failed to load visual words from SBE")
         }
     }
 
