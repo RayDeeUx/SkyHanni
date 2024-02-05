@@ -275,6 +275,7 @@ object GriffinBurrowHelper {
             DelayedRun.runDelayed(1.seconds) {
                 if (BurrowAPI.lastBurrowRelatedChatMessage.passedSince() > 2.seconds) {
                     if (particleBurrows.containsKey(location)) {
+                        // workaround
                         particleBurrows = particleBurrows.editCopy { keys.remove(location) }
                     }
                 }
