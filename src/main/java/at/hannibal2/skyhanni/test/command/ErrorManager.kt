@@ -1,7 +1,6 @@
 package at.hannibal2.skyhanni.test.command
 
 import at.hannibal2.skyhanni.SkyHanniMod
-import at.hannibal2.skyhanni.test.command.ErrorManager.logErrorWithData
 import at.hannibal2.skyhanni.utils.KeyboardManager
 import at.hannibal2.skyhanni.utils.LorenzUtils
 import at.hannibal2.skyhanni.utils.OSUtils
@@ -23,7 +22,7 @@ object ErrorManager {
 
     fun skyHanniError(message: String): Nothing {
         val exception = IllegalStateException(message)
-        logErrorWithData()
+        logError(exception, message)
         throw exception
     }
 
