@@ -32,8 +32,6 @@ import at.hannibal2.skyhanni.utils.LorenzUtils.makeAccessible
 import at.hannibal2.skyhanni.utils.LorenzVec
 import at.hannibal2.skyhanni.utils.NEUInternalName
 import at.hannibal2.skyhanni.utils.NEUItems
-import at.hannibal2.skyhanni.utils.NEUItems.getInternalNameFromItemName
-import at.hannibal2.skyhanni.utils.NEUItems.getItemStack
 import at.hannibal2.skyhanni.utils.NEUItems.getNpcPriceOrNull
 import at.hannibal2.skyhanni.utils.NumberUtil.addSeparators
 import at.hannibal2.skyhanni.utils.OSUtils
@@ -238,8 +236,8 @@ class SkyHanniDebugsAndTests {
                 list.add("$coloredName§7 (")
                 for (itemName in item.value) {
                     try {
-                        val internalName = getInternalNameFromItemName()
-                        list.add(getItemStack())
+                        val internalName = NEUItems.getRawInternalName(itemName)
+                        list.add(NEUItems.getItemStack(internalName))
                     } catch (e: Error) {
                         LorenzUtils.debug("itemName '$itemName' is invalid for visitor '$name'")
                         errors++
@@ -353,6 +351,7 @@ class SkyHanniDebugsAndTests {
 
             val internalName = hand.getInternalNameOrNull()
             if (internalName == null) {
+                LorenzUtils.error("§cInternal name is null for item ${hand.name}")
                 return
             }
 
