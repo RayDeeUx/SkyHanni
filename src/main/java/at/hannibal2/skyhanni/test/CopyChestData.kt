@@ -19,19 +19,28 @@ object CopyChestData {
     private val mc = Minecraft.getMinecraft()
     private const val HOTBAR_SIZE = 9
     private const val INVENTORY_SIZE = 27
-    private const val DEBUG_SUFFIX: String = "data copied into the clipboard! §lMake sure to save it into a .txt file; these tend to get quite long."
+    private const val DEBUG_SUFFIX: String =
+        "data copied into the clipboard! §lMake sure to save it into a .txt file; these tend to get quite long."
+
     @SubscribeEvent
     fun onKeybind(event: GuiScreenEvent.KeyboardInputEvent.Post) {
         if (event.gui !is GuiContainer) return
         when {
             config.copyEntireChest.isKeyHeld() -> {
                 if (event.gui is GuiChest) {
-                    copyChestData(chest = (event.gui as GuiChest).inventorySlots.inventorySlots)
+                    copyChestData(
+                        (event.gui as GuiChest).inventorySlots.inventorySlots
+                    )
                 }
             }
+
             config.copyPlayerInventory.isKeyHeld() -> {
-                copyInventoryData(inventory = if (config.includeArmor) (mc.thePlayer.inventory.mainInventory + mc.thePlayer.inventory.armorInventory) else mc.thePlayer.inventory.mainInventory)
+                copyInventoryData(
+                    if (config.includeArmor) (mc.thePlayer.inventory.mainInventory + mc.thePlayer.inventory.armorInventory)
+                    else mc.thePlayer.inventory.mainInventory
+                )
             }
+
             config.copyChestName.isKeyHeld() -> {
                 if (InventoryUtils.openInventoryName().isNotEmpty()) {
                     OSUtils.copyToClipboard(InventoryUtils.openInventoryName())
@@ -40,6 +49,7 @@ object CopyChestData {
             }
         }
     }
+
     private fun copyInventoryData(inventory: Array<ItemStack?>) {
         val copyList = mutableListOf<String>(
             "relevant config:",
@@ -61,7 +71,14 @@ object CopyChestData {
                     ""
                 )
             )
-            if (i == HOTBAR_SIZE + INVENTORY_SIZE && config.includeArmor) copyList.addAll(listOf("note: the rest of your inventory data ends here", "your armor:", "", ""))
+            if (i == HOTBAR_SIZE + INVENTORY_SIZE && config.includeArmor) copyList.addAll(
+                listOf(
+                    "note: the rest of your inventory data ends here",
+                    "your armor:",
+                    "",
+                    ""
+                )
+            )
             if (stack == null) {
                 if (config.includeNullSlots) copyList.addAll(
                     listOf(
@@ -70,9 +87,7 @@ object CopyChestData {
                         ""
                     )
                 )
-                continue
-            }
-            if (stack.displayName.isNotBlank() || config.includeUnnamedItems) {
+            } else if (stack.displayName.isNotBlank() || config.includeUnnamedItems) {
                 copyList.add("slot $i:")
                 copyList.addAll(stack.getStackInfo())
             }
@@ -80,6 +95,7 @@ object CopyChestData {
         OSUtils.copyToClipboard(copyList.joinToString("\n"))
         ChatUtils.chat("Inventory $DEBUG_SUFFIX")
     }
+
     private fun copyChestData(chest: List<Slot>) {
         val copyList = mutableListOf<String>(
             "relevant config:",
@@ -93,7 +109,13 @@ object CopyChestData {
         for (slot in chest) {
             val stack = slot.stack
             if (stack == null) {
-                if (config.includeNullSlots) copyList.addAll(listOf("(there is nothing inside slot ${slot.slotIndex}; it is null)", "", ""))
+                if (config.includeNullSlots) copyList.addAll(
+                    listOf(
+                        "(there is nothing inside slot ${slot.slotIndex}; it is null)",
+                        "",
+                        ""
+                    )
+                )
                 continue
             }
             if (stack in mc.thePlayer.inventory.mainInventory) break
@@ -105,6 +127,7 @@ object CopyChestData {
         OSUtils.copyToClipboard(copyList.joinToString("\n"))
         ChatUtils.chat("Chest $DEBUG_SUFFIX")
     }
+
     private fun ItemStack.getStackInfo(): List<String> {
         val itemStack = this
         return buildList {
