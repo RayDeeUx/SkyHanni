@@ -75,10 +75,19 @@ object CopyChestData {
         ChatUtils.chat("Chest $DEBUG_SUFFIX")
     }
     private fun ItemStack.getStackInfo(): List<String> {
-        val returnList = mutableListOf<String>()
-        returnList.addAll(listOf<String>("{", "  stackSize: ${this.stackSize}", "    isStackable: ${this.isStackable}", "    item data:", "      ["))
-        returnList.addAll(grabItemData(this))
-        returnList.addAll(listOf<String>("   ]","}", ""))
-        return returnList
+        val itemStack = this
+        return buildList {
+            addAll(
+                listOf<String>(
+                    "{",
+                    "  stackSize: ${itemStack.stackSize}",
+                    "    isStackable: ${itemStack.isStackable}",
+                    "    item data:",
+                    "      ["
+                )
+            )
+            addAll(grabItemData(itemStack))
+            addAll(listOf<String>("   ]", "}", ""))
+        }
     }
 }
