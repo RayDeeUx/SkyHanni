@@ -30,7 +30,7 @@ object CopyChestData {
                 }
             }
             config.copyPlayerInventory.isKeyHeld() -> {
-                copyInventoryData(inventory = if (config.includeArmor) mc.thePlayer.inventory.mainInventory + mc.thePlayer.inventory.armorInventory else mc.thePlayer.inventory.mainInventory)
+                copyInventoryData(inventory = if (config.includeArmor) (mc.thePlayer.inventory.mainInventory + mc.thePlayer.inventory.armorInventory) else mc.thePlayer.inventory.mainInventory)
             }
             config.copyChestName.isKeyHeld() -> {
                 if (InventoryUtils.openInventoryName().isNotEmpty()) {
@@ -41,12 +41,35 @@ object CopyChestData {
         }
     }
     private fun copyInventoryData(inventory: Array<ItemStack?>) {
-        val copyList = mutableListOf<String>("relevant config:", "includeNullSlots: ${config.includeNullSlots}", "includeUnnamedItems: ${config.includeUnnamedItems}", "includeArmor: ${config.includeArmor}", "", "your inventory is below.", "", "your hotbar:", "")
+        val copyList = mutableListOf<String>(
+            "relevant config:",
+            "includeNullSlots: ${config.includeNullSlots}",
+            "includeUnnamedItems: ${config.includeUnnamedItems}",
+            "includeArmor: ${config.includeArmor}",
+            "",
+            "your inventory is below.",
+            "",
+            "your hotbar:",
+            ""
+        )
         for ((i, stack) in inventory.withIndex()) {
-            if (i == HOTBAR_SIZE) copyList.addAll(listOf("note: hotbar ends here", "the rest of your inventory:", "", ""))
+            if (i == HOTBAR_SIZE) copyList.addAll(
+                listOf(
+                    "note: hotbar ends here",
+                    "the rest of your inventory:",
+                    "",
+                    ""
+                )
+            )
             if (i == HOTBAR_SIZE + INVENTORY_SIZE && config.includeArmor) copyList.addAll(listOf("note: the rest of your inventory data ends here", "your armor:", "", ""))
             if (stack == null) {
-                if (config.includeNullSlots) copyList.addAll(listOf("(slot $i is null)", "", ""))
+                if (config.includeNullSlots) copyList.addAll(
+                    listOf(
+                        "(slot $i is null)",
+                        "",
+                        ""
+                    )
+                )
                 continue
             }
             if (stack.displayName.isNotBlank() || config.includeUnnamedItems) {
@@ -58,7 +81,15 @@ object CopyChestData {
         ChatUtils.chat("Inventory $DEBUG_SUFFIX")
     }
     private fun copyChestData(chest: List<Slot>) {
-        val copyList = mutableListOf<String>("relevant config:", "includeNullSlots: ${config.includeNullSlots}", "includeUnnamedItems: ${config.includeUnnamedItems}", "includeArmor: ${config.includeArmor}", "", "chest name: '${InventoryUtils.openInventoryName()}'", "")
+        val copyList = mutableListOf<String>(
+            "relevant config:",
+            "includeNullSlots: ${config.includeNullSlots}",
+            "includeUnnamedItems: ${config.includeUnnamedItems}",
+            "includeArmor: ${config.includeArmor}",
+            "",
+            "chest name: '${InventoryUtils.openInventoryName()}'",
+            ""
+        )
         for (slot in chest) {
             val stack = slot.stack
             if (stack == null) {
@@ -87,7 +118,13 @@ object CopyChestData {
                 )
             )
             addAll(grabItemData(itemStack))
-            addAll(listOf<String>("   ]", "}", ""))
+            addAll(
+                listOf<String>(
+                    "   ]",
+                    "}",
+                    ""
+                )
+            )
         }
     }
 }
